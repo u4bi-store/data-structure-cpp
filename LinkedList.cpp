@@ -71,7 +71,7 @@ public:
     void deleteNode(string data){
         Node* tempPoint = Head; /* 임시 포인터에 헤드의 주소값으로 초기화 함 */
 
-        if(Node* tempPoint = Head) return; /* 한번도 추가한적이 없으면 그냥 리턴*/
+        if(tempPoint == NULL) return; /* 한번도 추가한적이 없으면 그냥 리턴*/
         
         if(tempPoint->link ==NULL){ /* 노드가 하나만 존재하면 그 노드만 삭제함*/
             delete tempPoint; /* tempPoint를 메모리 공간에서 해제시킴*/
@@ -94,15 +94,51 @@ public:
             /* 메모리 공간 버려줌*/
         }
     }
+    
+    /* 노드의 리스트를 출력하는 함수인 printNode */
+    void printNode(){
+        Node* tempPoint = Head; /* 임시 포인터를 생성함 그리고 여기에 헤드의 주소값을 대입함*/
+        
+        if(tempPoint == NULL){
+            /* 노드가 하나도 존재하지 않으면 리턴*/
+            cout << "리스트 비어있음" << endl;
+            return;
+        }
+        
+        if(tempPoint -> link == NULL) cout << tempPoint->data << endl; /* 노드가 하나만 존재하면 출력*/
+        else{ /* 그게 아니고 하나 이상이면 */
+            while(tempPoint != NULL){ /* 임시 포인터가 NULL이 될때까지 루프돌림*/
+                cout << tempPoint->data << " "; /* 임시포인트의 데이터를 출력*/
+                tempPoint = tempPoint-> link; /* 임시포인터의 link 즉 다음 노드의 주소값을 주입함*/
+                /* 주입했으니 루프*/
+            }
+            /* 널이되어서 와일 빠져나가면 끝*/
+            cout << endl; /* 개행해줌*/
+        }
+    }
 
 };
 
 void List::linkedList(){
+    cout << "singly linked List go" << endl;
     SLL sll;
-    
+    /* 싱글 링크드 리스트 즉 단순 연결 리스트는*/
     sll.appendNode("dd");
     sll.appendNode("ff");
-    sll.deleteNode("dd");
-    sll.deleteNode("ff");
+    sll.appendNode("gg");
+    sll.printNode();
   
+    sll.deleteNode("gg"); /* 꼬리부터 삭제해야함*/
+    sll.deleteNode("ff");
+    sll.deleteNode("dd");
+    sll.printNode();
+    /* 노드를 추가하고 제거하는 순서를 보임 (dd ff gg 추가했으면 노드를 잡아서 삭제해야함 gg부터)
+       앞순을 삭제하려면 Segmentation fault 세그폴트 오류가 일어남) */
+  
+    /* 세그멘테이션 오류 https://ko.wikipedia.org/wiki/세그멘테이션_오류
+    */
+  
+   /* 즉 단순 연결 리스트는 어떠한 위치에 있는 노드를 얻기 위해서 드는 부담도 크고 속도도 느리다는 단점이 있음.
+      왜냐? 머리부터 시작해서 꼬리까지 차례차례 노드를 탐색하기 때문임.
+      물론 장점도 있긴함. 새로 노드 추가하려면 추가 삭제가 간단함*/
 }
