@@ -11,6 +11,5 @@ int main() {
     
     List list;
     list.linkedList();
-    
     return 0;
 }
