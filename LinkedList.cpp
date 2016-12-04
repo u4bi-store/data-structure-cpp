@@ -59,6 +59,42 @@ public:
         }else Head = newNode; /* 임시포인터가 널이면 (즉 노드를 처음 추가하는거라면) 주입된 노드를 머리로 지정함.*/
     }
 
+    /* 노드를 제거하는 함수인 deleteNode*/
+    
+    /* deleteNode 함수는 data를 우선 인자로 받고 넘겨받은 인자인 data를 통해
+       각 노드의 data와 비교하는데 그둘이 일치하면 그 노드를 리스트에서 제외시킨다고 함
+       
+       그 후 삭제한 노드가 가지고 있는 다음 주소값을 그 삭제한 노드의 뒤에 놈이 물려받아 이어가는 형태임
+       즉 삭제한 놈을 바라보면서 가리키고 있는 노드놈이 가리킬 놈이 없어지잖음
+       그러면 안되니까 그 앞앞놈을 가리키는거임. */
+    
+    void deleteNode(string data){
+        Node* tempPoint = Head; /* 임시 포인터에 헤드의 주소값으로 초기화 함 */
+
+        if(Node* tempPoint = Head) return; /* 한번도 추가한적이 없으면 그냥 리턴*/
+        
+        if(tempPoint->link ==NULL){ /* 노드가 하나만 존재하면 그 노드만 삭제함*/
+            delete tempPoint; /* tempPoint를 메모리 공간에서 해제시킴*/
+            Head = NULL; /* 헤드도 빼버림 아무것도 가리키지 않게*/
+        }else{ /*노드가 하나만 존재하는게 아니라면 */
+            Node *prevNode; /* 이전 노드에 담을 Node 클래스임*/
+            /* 두 와일문 돌림*/
+            do{/* 조건*/
+                /* data와 tempPoint->data와 비교해서 일치하면 루프 빠짐*/
+                if(data.compare(tempPoint->data) == 0) break;
+                
+                /* 일치하지 않으면 아래*/
+                prevNode = tempPoint; /* 이전 노드에다 임시포인터 주소값 넘김*/
+                tempPoint = tempPoint->link; /* 임시노드에 다음 노드 주소값을 대입함*/
+            }while(tempPoint != NULL); /* 그런후 임시포인터의 주소값이 NULL이 될때까지 루프 돌림*/
+            /*조건과 일치하면 빠지고*/
+            prevNode->link = tempPoint->link; /* 이전노드의 link에 임시포인터의 link를 넘김*/
+            /* 암튼 이전 노드가! 즉 지금 삭제되는 노드의 다음을 가리키게 하는거임*/
+            delete tempPoint;
+            /* 메모리 공간 버려줌*/
+        }
+    }
+
 };
 
 void List::linkedList(){
@@ -66,5 +102,7 @@ void List::linkedList(){
     
     sll.appendNode("dd");
     sll.appendNode("ff");
+    sll.deleteNode("dd");
+    sll.deleteNode("ff");
   
 }
